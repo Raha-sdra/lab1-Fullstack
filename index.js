@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 
-app.get('/', async(req,res)=>
+app.get('/albums', async(req,res)=>
 {
     try {
         const albums = await Album.find()
@@ -28,7 +28,7 @@ app.get('/', async(req,res)=>
     }
 })
 
-app.get("/:title", async (req, res) => {
+app.get("/albums/:title", async (req, res) => {
     const searchTitle = req.params.title;
     try {
       const album = await Album.find({ title: { $regex: new RegExp(`${searchTitle}`, "i") } }).exec();
@@ -42,10 +42,12 @@ app.get("/:title", async (req, res) => {
     }
 });
 
-app.put("/:id", async (req, res) => {
+app.put("/albums/:id", async (req, res) => {
     const id = req.params.id;
     if (albumById(id, res)) {
       const album = await albumById(id, res)
+      console.log('id', req.body)
+
       try {
         album.title = req.body.title;
         album.artist = req.body.artist;
@@ -58,7 +60,7 @@ app.put("/:id", async (req, res) => {
     }    
 })
 
-app.delete("/:id", async (req, res) => {
+app.delete("/albums/:id", async (req, res) => {
     const id = req.params.id;
     if (albumById(id, res)) {
       const album = await albumById(id, res)
@@ -71,7 +73,7 @@ app.delete("/:id", async (req, res) => {
     }    
 })
 
-app.post('/', async (req, res) => {
+app.post('/albums', async (req, res) => {
     try {
       const newAlbum = {
         title: req.body.title,
@@ -83,13 +85,14 @@ app.post('/', async (req, res) => {
         res.status(409).json({ message: "This album is registered into the database!" })
         return;
       }
-  
-    //   let newId = await generateID()
-  
+      
+      let newId = await generateID()
+      
       const album = new Album({
-        // id:newId,
+        id:newId,
         ...newAlbum,
       });
+      // console.log('album', newId, album)
   
       try {
         const a1 = await album.save();
@@ -104,8 +107,15 @@ app.post('/', async (req, res) => {
     }
   })
 
+  async function generateID(){
+      let album = await Album.find({}).sort({_id: -1}).limit(1);
+      const lastID = (album[0].id) + 1;
+      return lastID
+  }
+
 async function albumById(id, res){
     let album = await Album.find({id:id}).exec();
+    console.log('Album id', album[0])
     if(album.length === 0){
         return res.status(404).send('No such album')
     }

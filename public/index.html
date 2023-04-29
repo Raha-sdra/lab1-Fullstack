@@ -17,49 +17,51 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#myInput {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 50%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+} 
 </style>
 </head>
 <body>
 
-<h2>HTML Table</h2>
+  <h2>Album Table</h2>  
+  <form action="" method="get">
+    <label>Search title</label>
+    <input type="text" id="myInput" placeholder="Search for names.." title="Type in a name">
+    <button id="searchButton">search</button>
+  </form>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Artist</th>
-    <th>year</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr>
-  <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-    <td>UK</td>
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
-  </tr>
+  <form action="" id="post-Album">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required />
+    <label for="artist">Artist:</label>
+    <input type="text" id="artist" name="artist" required />
+    <label for="year">Year:</label>
+    <input type="text" id="year" name="year" required/>
+    <input type="submit" value="Submit">
+  </form> 
+
+<table id="album-table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
 </table>
+
+<script type="module" src="./client.js"></script>
 
 </body>
 </html>
