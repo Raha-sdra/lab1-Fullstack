@@ -1,6 +1,6 @@
 async function getAlbums(){
     // console.log('qwe')
-    let allAlbums = await fetch('http://localhost:3000/albums', {
+    let allAlbums = await fetch('/albums', {
         method: 'GET',
         headers: {'content-type': 'application/json'},
     });
@@ -57,7 +57,7 @@ async function getAlbums(){
             console.log('year',album.id, newTitle, newArtist, newYear)
             try{
                 const newUpdate = await fetch(
-                    `http://localhost:3000/albums/${album.id}`,
+                    `/albums/${album.id}`,
                     {
                         method: 'PUT',
                         headers: {
@@ -82,7 +82,7 @@ async function getAlbums(){
             if(confirm('You want to delete it?')){
                 const row = e.target.parentNode.parentNode
                 try {
-                    await fetch(`http://localhost:3000/albums/${album.id}`,
+                    await fetch(`/albums/${album.id}`,
                     {
                         method: "DELETE"
                     })
@@ -104,7 +104,7 @@ postAlbum.addEventListener("submit", async (e)=>{
     const year = document.getElementById("year").value.trim();
 
     try {
-        const res = await fetch("http://localhost:3000/albums", {
+        const res = await fetch("/albums", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -122,7 +122,7 @@ postAlbum.addEventListener("submit", async (e)=>{
 
 async function searchTitle(){
     const title = (document.getElementById('myInput')).value;
-    let searchAlbum = await fetch(`http://localhost:3000/albums/${title}`, {
+    let searchAlbum = await fetch(`/albums/${title}`, {
         method: 'GET',
         headers: {'content-type': 'application/json'},
     });
